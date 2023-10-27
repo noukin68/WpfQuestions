@@ -9,21 +9,6 @@ namespace WpfApp1.Classes
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
 
-        private const int VK_LWIN = 0x5B; // Левая клавиша Win
-        private const int VK_RWIN = 0x5C; // Правая клавиша Win
-
-        private const int VK_LALT = 0xA4; // Левая клавиша ALT
-        private const int VK_RALT = 0xA5; // Правая клавиша ALT
-
-        private const int VK_LCTRL = 0xA2; // Левая клавиша CTRL
-        private const int VK_RCTRL = 0xA3; // Правая клавиша CTRL
-        private const int VK_ESC = 0x1B; // Клавиша ESC
-
-        private const int VK_DELETE = 0x2E; // Клавиша Delete на числовой клавиатуре (numpad)
-        private const int VK_RETURN = 0x0D; // Клавиша Enter на числовой клавиатуре (numpad)
-
-        private const int VK_SPACE = 0x20; // Клавиша Space (пробел)
-
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -72,13 +57,11 @@ namespace WpfApp1.Classes
             if (nCode >= 0)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
-
-                if (isKeyboardLocked && (vkCode == VK_LWIN || vkCode == VK_RWIN || vkCode == VK_LALT || vkCode == VK_RALT || vkCode == VK_LCTRL || vkCode == VK_RCTRL || vkCode == VK_ESC || vkCode == VK_DELETE || vkCode == VK_RETURN || vkCode == VK_SPACE))
+                if (isKeyboardLocked)
                 {
                     return (IntPtr)1;
                 }
             }
-
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
     }
