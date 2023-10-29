@@ -122,6 +122,8 @@ namespace WpfApp1
             {
                 Question question = questionnaire.Questions[index];
                 textBlock.Text = question.Text;
+                textBlock.TextWrapping = TextWrapping.Wrap;
+                textBlock.TextAlignment = TextAlignment.Center;
                 answerStackPanel.Children.Clear();
                 StackPanel buttonStackPanel = new StackPanel
                 {
@@ -134,14 +136,24 @@ namespace WpfApp1
                 {
                     Button button = new Button
                     {
-                        Content = option,
                         Style = (Style)FindResource("ColoredButtonStyle"),
                         Tag = option,
-                        Width = 450
+                        Width = 450,
+                        HorizontalContentAlignment = HorizontalAlignment.Center
                     };
+
+                    TextBlock textBlock = new TextBlock
+                    {
+                        Text = option,
+                        TextWrapping = TextWrapping.Wrap,
+                        TextAlignment = TextAlignment.Center
+                    };
+
+                    button.Content = textBlock;
                     button.Click += AnswerButton_Click;
                     buttonStackPanel.Children.Add(button);
                 }
+
                 answerStackPanel.Children.Add(buttonStackPanel);
             }
             else
@@ -272,14 +284,31 @@ namespace WpfApp1
 
         private async Task ShowInitialWindowStateAsync()
         {
-            HttpClient client = new HttpClient();
-            var response = await client.GetAsync("http://62.217.182.138:3000/restartTimer");
-            this.WindowState = WindowState.Normal;
-            this.HideToTray();
-            answerStackPanel.Children.Clear();
-            textBlock.Text = "";
-            currentQuestionIndex = 0;
-            UnlockKeyboard();
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("http://62.217.182.138:3000/restartTimer");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.WindowState = WindowState.Normal;
+                        this.HideToTray();
+                        answerStackPanel.Children.Clear();
+                        textBlock.Text = "";
+                        currentQuestionIndex = 0;
+                        UnlockKeyboard();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка при получении данных: " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка: " + ex.Message);
+                }
+            }
         }
 
 

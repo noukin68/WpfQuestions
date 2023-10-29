@@ -57,10 +57,11 @@
     <ApplicationIcon>logoController.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>93BE906AC56281E0B872F7FCF888406A553734F1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>67C637ACBAED473652F8DABBCCB94C4A6D3C6148</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WpfApp1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
