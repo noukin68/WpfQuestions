@@ -223,7 +223,7 @@ namespace WpfApp1
 
                     correctAnswers++;
 
-                    if (correctAnswers == 1)
+                    if (correctAnswers == 5)
 
                     {
 
